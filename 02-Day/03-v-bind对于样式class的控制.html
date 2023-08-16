@@ -29,7 +29,7 @@
 <body>
 
   <div id="app">
-    <div :class="{box :true,pink:true }">黑马程序员</div>
+    <div :class="{box :true,pink:control }" @click="fn">黑马程序员</div>
     <div :class="['box','big']">黑马程序员</div>
   </div>
   <script src="./vue.js"></script>
@@ -37,7 +37,15 @@
     const app = new Vue({
       el: '#app',
       data: {
-
+        control: true
+        // fn() {
+        //   control = !control
+        // }
+      },
+      methods: {
+        fn() {
+          this.control = !this.control;
+        }
       }
     })
   </script>

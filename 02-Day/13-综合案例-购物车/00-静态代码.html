@@ -56,7 +56,7 @@
       <div class="bottom">
         <!-- 全选 -->
         <label class="check-all">
-          <input type="checkbox" />
+          <input type="checkbox" v-model="isAll" />
           全选
         </label>
         <div class="right-box">
@@ -114,6 +114,18 @@
               price: 34,
             },
           ],
+      },
+      computed: {
+        isAll: {
+          get() {
+            return this.fruitList.every(item => item.isChecked)
+          },
+          set(value) {
+            this.fruitList.forEach(item => {
+              item.isChecked = value
+            });
+          }
+        }
       },
       methods: {
         del(id) {

@@ -42,13 +42,13 @@
             <div class="td">{{item.price}}</div>
             <div class="td">
               <div class="my-input-number">
-                <button class="decrease"> - </button>
+                <button class="decrease" @click="sub(item.id)" :disabled="item.num <= 1"> - </button>
                 <span class="my-input__inner">{{item.num}}</span>
-                <button class="increase"> + </button>
+                <button class="increase" @click="add(item.id)"> + </button>
               </div>
             </div>
             <div class="td">{{item.price * item.num}}</div>
-            <div class="td"><button>删除</button></div>
+            <div class="td"><button @click="del(item.id)">删除</button></div>
           </div>
         </div>
       </div>
@@ -115,6 +115,19 @@
             },
           ],
       },
+      methods: {
+        del(id) {
+          this.fruitList = this.fruitList.filter(item => item.id !== id)
+        },
+        add(id) {
+          const fruit = this.fruitList.find(item => item.id === id);
+          fruit.num++;
+        },
+        sub(id) {
+          const fruit = this.fruitList.find(item => item.id === id);
+          fruit.num--;
+        }
+      }
     })
   </script>
 </body>

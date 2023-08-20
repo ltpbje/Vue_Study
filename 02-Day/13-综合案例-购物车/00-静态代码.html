@@ -61,9 +61,9 @@
         </label>
         <div class="right-box">
           <!-- 所有商品总价 -->
-          <span class="price-box">总价&nbsp;&nbsp;:&nbsp;&nbsp;¥&nbsp;<span class="price">24</span></span>
+          <span class="price-box">总价&nbsp;&nbsp;:&nbsp;&nbsp;¥&nbsp;<span class="price">{{totalPrice}}</span></span>
           <!-- 结算按钮 -->
-          <button class="pay">结算( 6 )</button>
+          <button class="pay">结算( {{totalNum}} )</button>
         </div>
       </div>
     </div>
@@ -125,6 +125,24 @@
               item.isChecked = value
             });
           }
+        },
+        totalNum() {
+          return this.fruitList.reduce((sum, item) => {
+            if (item.isChecked) {
+              return sum + item.num;
+            } else {
+              return sum;
+            }
+          }, 0)
+        },
+        totalPrice() {
+          return this.fruitList.reduce((sum, item) => {
+            if (item.isChecked) {
+              return sum + item.num * item.price;
+            } else {
+              return sum;
+            }
+          }, 0)
         }
       },
       methods: {

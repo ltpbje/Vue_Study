@@ -36,8 +36,8 @@
         </div>
         <!-- 身体 -->
         <div class="tbody">
-          <div class="tr active" v-for="(item,index) in fruitList" :key="item.id">
-            <div class="td"><input type="checkbox" checked /></div>
+          <div class="tr" :class="{active: item.isChecked}" v-for="(item,index) in fruitList" :key="item.id">
+            <div class="td"><input type="checkbox" v-model="item.isChecked" /></div>
             <div class="td"><img :src="item.icon" alt="" /></div>
             <div class="td">{{item.price}}</div>
             <div class="td">

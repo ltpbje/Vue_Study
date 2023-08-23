@@ -29,10 +29,32 @@
       // 1.创建阶段(准备数据)
       // beforeCreate
       beforeCreate() {
-
+        console.log('beforeCreate 响应式数据准备之前', this.count);
       },
       created() {
-
+        console.log('created 响应式数据准备完成之后', this.count);
+        // 可以请求数据了
+      },
+      // 2.挂载阶段(渲染模版)
+      beforeMount() {
+        console.log('beforeMount 模版渲染之前', document.querySelector('h3'));
+      },
+      mounted() {
+        console.log('mounted 模版渲染之后', document.querySelector('h3'));
+      },
+      //3. 更新阶段(修改数据,更新视图)
+      beforeUpdate() {
+        console.log('beforeDate', document.querySelector('span').innerHTML);
+      },
+      updated() {
+        console.log('dated', document.querySelector('span').innerHTML);
+      },
+      // 4. 销毁阶段(销毁实例)
+      beforeDestroy() {
+        console.log('beforeDestroy');
+      },
+      destroyed() {
+        console.log('destroyed');
       }
     })
   </script>

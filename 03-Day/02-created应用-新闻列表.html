@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,6 +12,7 @@
       padding: 0;
       list-style: none;
     }
+
     .news {
       display: flex;
       height: 120px;
@@ -19,6 +21,7 @@
       padding: 20px 0;
       cursor: pointer;
     }
+
     .news .left {
       flex: 1;
       display: flex;
@@ -26,19 +29,24 @@
       justify-content: space-between;
       padding-right: 10px;
     }
+
     .news .left .title {
       font-size: 20px;
     }
+
     .news .left .info {
       color: #999999;
     }
+
     .news .left .info span {
       margin-right: 20px;
     }
+
     .news .right {
       width: 160px;
       height: 120px;
     }
+
     .news .right img {
       width: 100%;
       height: 100%;
@@ -46,6 +54,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <div id="app">
@@ -98,9 +107,14 @@
     const app = new Vue({
       el: '#app',
       data: {
-        
+        list: [],
+        async created() {
+          const res = await axios.get('http://hmajax.itheima.net/api/news');
+          console.log(res);
+        }
       }
     })
   </script>
 </body>
+
 </html>

@@ -81,8 +81,8 @@
 
         <!-- 添加资产 -->
         <form class="my-form">
-          <input v-model="name" type="text" class="form-control" placeholder="消费名称" />
-          <input v-model="price" type="text" class="form-control" placeholder="消费价格" />
+          <input v-model.trim="name" type="text" class="form-control" placeholder="消费名称" />
+          <input v-model.number="price" type="text" class="form-control" placeholder="消费价格" />
           <button @click="add" type="button" class="btn btn-primary">添加账单</button>
         </form>
 
@@ -100,7 +100,7 @@
               <td>{{index + 1}}</td>
               <td>{{item.name}}</td>
               <td :class="{red : item.price > 200 }">{{item.price}}</td>
-              <td><a href="javascript:;">删除</a></td>
+              <td><a href="javascript:;" @click="del(item.id)">删除</a></td>
             </tr>
           </tbody>
           <tfoot>
@@ -153,20 +153,48 @@
           return this.list.reduce((sum, item) => sum + item.price, 0);
         }
       },
+      async created() {
+        this.getList();
+      },
       methods: {
+        // 发请求得到列表数据
+        async getList() {
+          const res = await axios.get('https://applet-base-api-t.itheima.net/bill', {
+            params: {
+              creator: '小黑'
+            }
+          });
+          this.list = res.data.data;
+        },
+        //2. 添加功能
+        //(1) 收集表单数据 v- model
+        //(2) 给添加按钮注册点击事件，发送添加请求
+        //(3) 需要重新渲染
         async add() {
-          const res = await axios('')
+          if (!this.name) {
+            alert('请输入姓名');
+            return;
+          };
+          if (typeof this.price !== 'number') {
+            alert('请输入正确的价格');
+            return;
+          };
+          const res = await axios.post('https://applet-base-api-t.itheima.net/bill', {
+            creator: '小黑',
+            name: this.name,
+            price: this.price
+          });
+          this.name = '';
+          this.price = '';
+          console.log(res);
+          // 重新渲染
+          this.getList();
+        },
+        async del(id) {
+          const res = axios.delete(`https://applet-base-api-t.itheima.net/bill/${id}`);
+          this.getList();
         }
       },
-      async created() {
-        const res = await axios.get('https://applet-base-api-t.itheima.net/bill', {
-          params: {
-            creator: '小黑'
-          }
-        });
-        console.log(res);
-        this.list = res.data.data;
-      }
     })
   </script>
 </body>
